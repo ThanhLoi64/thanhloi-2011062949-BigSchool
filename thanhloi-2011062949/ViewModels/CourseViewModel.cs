@@ -11,6 +11,11 @@ namespace thanhloi_2011062949.ViewModels
 {
     public class CourseViewModel
     {
+        public class CoursesViewModels
+        {
+            public IEnumerable<Course> UpcommingCourses { get; set; }
+            public bool ShowAction { get; set; }
+        }
         [Required]
         public string Place { get; set; }
 
@@ -25,8 +30,21 @@ namespace thanhloi_2011062949.ViewModels
         public byte Category { get; set; }
 
         public IEnumerable<Category> Categories { get; set; }
-        public IQueryable<Course> UpcommingCourses { get; internal set; }
+
+        private IQueryable<Course> upcommingCourses;
+
+        public IQueryable<Course> GetUpcommingCourses()
+        {
+            return upcommingCourses;
+        }
+
+        internal void SetUpcommingCourses(IQueryable<Course> value)
+        {
+            upcommingCourses = value;
+        }
+
         public bool ShowAction { get; internal set; }
+        public IQueryable<Course> UpcommingCourses { get; internal set; }
 
         public DateTime GetDateTime()
         {
@@ -54,11 +72,7 @@ namespace thanhloi_2011062949
 
     public class ValidTime : ValidationAttribute
     {
-        public class CoursesViewModels
-        {
-            public IEnumerable<Course> UpcommingCourses { get; set; }
-            public bool ShowAction { get; set; }
-        }
+       
         public override bool IsValid(object value)
         {
 

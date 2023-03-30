@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using thanhloi_2011062949.Models;
+using thanhloi_2011062949.DTOs;
 
 namespace thanhloi_2011062949.Controllers
 {
@@ -19,7 +21,7 @@ namespace thanhloi_2011062949.Controllers
         [HttpPost]
         public IHttpActionResult Follow(FollowingDto followingDto)
         {
-            var userId = User.Identity.GetUserId();
+            var userId = User.Identify.GetUserId();
             if (_dbContext.Followings.Any(f => f.FollowerId == userId && f.FolloweeId == followingDto.FolloweeId))
                 return BadRequest("Following already exists!");
 
