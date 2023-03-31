@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using thanhloi_2011062949.Models;
-
+using thanhloi_2011062949.ViewModels;
 
 namespace thanhloi_2011062949.Controllers
 {
@@ -24,7 +24,7 @@ namespace thanhloi_2011062949.Controllers
                 .Include(c => c.Category)
                 .Where(c => c.DateTime > DateTime.Now);
 
-            var viewModel = new ViewModels.CourseViewModel
+            var viewModel = new CoursesViewModel
             {
                 UpcommingCourses = upcommingCourses,
                 ShowAction = User.Identity.IsAuthenticated

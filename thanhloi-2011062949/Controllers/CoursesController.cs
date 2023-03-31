@@ -21,7 +21,7 @@ namespace thanhloi_2011062949.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            var viewModel = new CourseViewModel
+            var viewModel = new CoursesViewModel
             {
                 Categories = _dbContext.Categories.ToList()
             };
@@ -30,7 +30,7 @@ namespace thanhloi_2011062949.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CourseViewModel ViewModel)
+        public ActionResult Create(CoursesViewModel ViewModel)
         {
             if(!ModelState.IsValid)
             {
@@ -49,6 +49,7 @@ namespace thanhloi_2011062949.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        [Authorize]
         public ActionResult Attending()
         {
             var userId = User.Identity.GetUserId();
@@ -60,9 +61,9 @@ namespace thanhloi_2011062949.Controllers
                 .Include(l => l.Category)
                 .ToList();
 
-            var viewModel = new CourseViewModel
+            var viewModel = new CoursesViewModel
             {
-                UpcommingCourses = courses,
+                UpcommingCourses = (IQueryable<Course>)courses,
                 ShowAction = User.Identity.IsAuthenticated
             };
 

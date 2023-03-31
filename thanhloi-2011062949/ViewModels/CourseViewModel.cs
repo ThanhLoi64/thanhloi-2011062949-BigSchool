@@ -9,7 +9,7 @@ using thanhloi_2011062949.Models;
 
 namespace thanhloi_2011062949.ViewModels
 {
-    public class CourseViewModel
+    public class CoursesViewModel
     {
         public class CoursesViewModels
         {

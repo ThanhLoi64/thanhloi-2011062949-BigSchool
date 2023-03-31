@@ -2,25 +2,33 @@ namespace thanhloi_2011062949.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class AddFollowingsTable : DbMigration
     {
         public override void Up()
         {
-            RenameColumn(table: "dbo.Followings", name: "Follower_Id", newName: "FollowerId");
-            RenameIndex(table: "dbo.Followings", name: "IX_Follower_Id", newName: "IX_FollowerId");
-            DropPrimaryKey("dbo.Followings");
-            AddPrimaryKey("dbo.Followings", new[] { "FollowerId", "FolloweeId" });
-            DropColumn("dbo.Followings", "FollerId");
+            CreateTable(
+                "dbo.Followings",
+                c => new
+                {
+                    FollowerId = c.String(nullable: false, maxLength: 128),
+                    FolloweeId = c.String(nullable: false, maxLength: 128),
+                })
+                .PrimaryKey(t => new { t.FollowerId, t.FolloweeId })
+                .ForeignKey("dbo.AspNetUsers", t => t.FollowerId)
+                .ForeignKey("dbo.AspNetUsers", t => t.FolloweeId)
+                .Index(t => t.FollowerId)
+                .Index(t => t.FolloweeId);
+
         }
-        
+
         public override void Down()
         {
-            AddColumn("dbo.Followings", "FollerId", c => c.String(nullable: false, maxLength: 128));
-            DropPrimaryKey("dbo.Followings");
-            AddPrimaryKey("dbo.Followings", new[] { "FollerId", "FolloweeId" });
-            RenameIndex(table: "dbo.Followings", name: "IX_FollowerId", newName: "IX_Follower_Id");
-            RenameColumn(table: "dbo.Followings", name: "FollowerId", newName: "Follower_Id");
+            DropForeignKey("dbo.Followings", "FolloweeId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Followings", "FollowerId", "dbo.AspNetUsers");
+            DropIndex("dbo.Followings", new[] { "FolloweeId" });
+            DropIndex("dbo.Followings", new[] { "FollowerId" });
+            DropTable("dbo.Followings");
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿
-@model thanhloi_2011062949.ViewModels.CoursesViewModel
+﻿@model thanhloi_2011062949.ViewModels.CoursesViewModel
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Attending";
+    Layout = "~/Views/Courses";
 }
 <style>
     .course {
@@ -35,7 +35,7 @@
                 @course.DateTime - @course.Lecturer.Name
             </li>
 
-           
+
             <li>
                 <div class="date">
                     <div class="month">
@@ -63,11 +63,11 @@
                     {
                         <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
                     }
-                   
+
                 </div>
             </li>
         }
-    </ul> 
+    </ul>
 </div>
 @section scripts
 {
@@ -98,5 +98,7 @@
             });
         });
     </script>
-    }
+}
+
+
 
